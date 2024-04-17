@@ -12,7 +12,7 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
-class MyAdapter(val context: Activity, val dataList: List<Mydata>) :
+class MyAdapter(val context: Activity, val dataList: List<Data>?) :
     RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -22,17 +22,21 @@ class MyAdapter(val context: Activity, val dataList: List<Mydata>) :
     }
 
     override fun getItemCount(): Int {
-        return dataList.size
+        return dataList!!.size
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentData = dataList[position]
-        holder.title.text = currentData.title
+        val currentData = dataList?.get(position)
+        if (currentData != null) {
+            holder.title.text = currentData.title
+        }
 
         // Load image using Picasso library
-        Picasso.get().load(currentData.album.cover).into(holder.image)
+        if (currentData != null) {
+            Picasso.get().load(currentData.album.cover).into(holder.image)
+        }
 
-        val mediaPlayer = MediaPlayer.create(context, currentData.previewUrl.toUri())
+        val mediaPlayer = MediaPlayer.create(context, currentData!!.preview.toUri())
         holder.play.setOnClickListener {
             mediaPlayer.start()
         }

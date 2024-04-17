@@ -1,9 +1,9 @@
 package com.example.musicplayer
 
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         retrofitdata.enqueue(object : Callback<Mydata?> {
             override fun onResponse(call: Call<Mydata?>, response: Response<Mydata?>) {
                 val dataList = response.body()?.data
-                myAdapter = myAdapter(this@MainActivity, dataList) // Update adapter data
+                myAdapter = MyAdapter(this@MainActivity, dataList) // Update adapter data
                 myRecyclerView.adapter = myAdapter
                 myRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
 
